@@ -13,3 +13,5 @@ declare global {
     }
   }
 }
+
+declare module 'aframe-ar';
