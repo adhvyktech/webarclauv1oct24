@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const AFrame = dynamic(() => import('aframe') as any, { ssr: false });
-const AFrameAR = dynamic(() => import('aframe-ar') as any, { ssr: false });
+// @ts-ignore
+const AFrameAR = dynamic(() => import('aframe-ar'), { ssr: false });
 
 const ARViewer: React.FC = () => {
   useEffect(() => {
