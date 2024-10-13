@@ -1,31 +1,35 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
+import 'aframe';
+import 'aframe-ar';
 
 const ARViewer: React.FC = () => {
   useEffect(() => {
-    // Load AR.js script
-    const script = document.createElement('script');
-    script.src = 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    // Ensure AFRAME is available before creating the scene
+    if (typeof AFRAME !== 'undefined') {
+      // Register any custom components here if needed
+      // AFRAME.registerComponent('my-component', { ... });
+    }
   }, []);
 
   return (
-    <>
-      <Head>
-        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-      </Head>
-      <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        <a-marker preset="hiro">
-          <a-box position="0 0.5 0" material="color: yellow;"></a-box>
-        </a-marker>
-        <a-entity camera></a-entity>
-      </a-scene>
-    </>
+    <a-scene 
+      embedded 
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      vr-mode-ui="enabled: false"
+    >
+      {/* Pre-load assets here */}
+
+      <a-marker preset="hiro">
+        <a-box 
+          position="0 0.5 0" 
+          material="color: yellow;" 
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+        ></a-box>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as THREE from 'three';
-import { ARButton } from 'three/examples/jsm/webxr/ARButton';
+import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+// Removed the problematic import for ARButton
 
 const PreviewSection: React.FC = () => {
   const [scale, setScale] = useState(1);

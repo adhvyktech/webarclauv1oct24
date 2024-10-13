@@ -15,9 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(process.cwd(), 'public', 'uploads');
-  form.keepExtensions = true;
+  const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+  const form = new formidable.IncomingForm({
+    uploadDir,
+    keepExtensions: true,
+  });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
@@ -30,12 +32,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const oldPath = file.filepath;
-    const newPath = path.join(form.uploadDir, file.originalFilename || 'marker.png');
+    const newPath = path.join(uploadDir, file.originalFilename || 'marker.png');
     fs.renameSync(oldPath, newPath);
 
     try {
       const pattFile = await generatePattFile(newPath);
-      const pattPath = path.join(form.uploadDir, 'marker.patt');
+      const pattPath = path.join(uploadDir, 'marker.patt');
       fs.writeFileSync(pattPath, pattFile);
 
       res.status(200).json({ 
