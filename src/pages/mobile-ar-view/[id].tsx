@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import 'aframe';
+import dynamic from 'next/dynamic';
+
+const AFrame = dynamic(() => import('aframe'), { ssr: false });
 import 'aframe-ar';
 
 const ARViewer: React.FC = () => {
